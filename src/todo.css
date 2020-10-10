@@ -3,7 +3,8 @@
     height: 800px;
     width: 1000px;
     /* border: solid yellow 1px; */
-    background-color: #FD8C67
+    background-color: #FD8C67;
+    overflow: hidden;
 }
 
 .innerContainer {
@@ -46,6 +47,10 @@
     margin-right: auto;
     /* border: solid 1px red; */
     overflow: auto;
+}
+
+.todoContainer::-webkit-scrollbar{
+    display: none;
 }
 
 .setUl {
