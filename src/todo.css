@@ -1,0 +1,155 @@
+.mainContainer {
+    position: relative;
+    height: 800px;
+    width: 1000px;
+    /* border: solid yellow 1px; */
+    background-color: #FD8C67
+}
+
+.innerContainer {
+    position: absolute;
+    left: 250px;
+    top: 65px;
+    height: 650px;
+    width: 500px;
+    /* border: solid turquoise 1px; */
+    background-color: seashell;
+    border-radius: 10px;
+}
+
+.headingTodo {
+    font-size: 45px;
+    font-weight: 500;
+    color: black;
+    /* border: solid 1px; */
+    margin-top: 50px;
+}
+
+.inputContainer {
+    position: relative;
+    top: 0px;
+    height: 80px;
+    width: 100%;
+    /* background-color: lightgray; */
+    /* border: solid 1px green; */
+
+}
+
+.todoContainer {
+    /* transform: rotate(180deg); */
+    position: relative;
+    margin-top: 20px;
+    position: static;
+    height: 310px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: solid 1px red; */
+    overflow: auto;
+}
+
+.setUl {
+    text-align: left;
+    list-style-type: none;
+    color: rgba(110, 105, 105, 0.986);
+    list-style-type: none;
+    border-bottom: solid 2px lightgray;
+    margin: 25px 5px 5px 30px;
+    padding-left: 1px;
+    width: 300px;
+    user-select: none;
+}
+
+.grabbable {
+    cursor: grab;
+}
+
+.grabbable:active {
+    cursor: grabbing
+}
+
+.input {
+    border: none;
+    position: absolute;
+    font-size: 25px;
+    left: 85px;
+    margin-top: 15px;
+    height: 45px;
+    width: 280px;
+    background-color: lightgray;
+    border-radius: 5px;
+    outline: none;
+}
+
+.button {
+    outline: none;
+    position: relative;
+    left: 140px;
+    height: 70px;
+    width: 70px;
+    margin-top: 5px;
+    border-radius: 50%;
+    border: none;
+    /* background-attachment: fixed; */
+    background-image: url('./green.png');
+    background-size: 100%;
+}
+
+.button:hover {
+    transform: scale(1.2);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.menubar {
+    width: 250px;
+    margin-top: 20px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: solid 1px blue; */
+    /* color: blue; */
+}
+
+.menuIcon {
+    float: left;
+    height: 100%;
+    width: auto;
+    cursor: pointer;
+    /* border: solid 1px blue; */
+}
+
+.menu {
+    width: 40px;
+    height: 40px;
+}
+
+.crossIcon {
+    margin-top: 5px;
+    float: left;
+    margin-left: 70px;
+    /* height: 20px; */
+    width: auto;
+    cursor: pointer;
+    /* border: solid 1px blue; */
+}
+
+.cross {
+    width: 30px;
+    height: 30px;
+}
+
+.tickIcon {
+    margin-top: 5px;
+
+    float: right;
+    /* height: 100%; */
+    width: auto;
+    /* border: solid 1px blue; */
+    cursor: pointer;
+}
+
+.tick {
+    width: 30px;
+    height: 30px;
+}
