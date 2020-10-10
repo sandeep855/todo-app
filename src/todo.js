@@ -113,7 +113,7 @@ export default class todo extends Component {
                         </div>
                         <form className="inputContainer">
                             <input type="text"
-                                maxLength="25"
+                                maxLength="20"
                                 className="input"
                                 id="todo"
                                 value={this.state.todo}
