@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
+// import Showlist from "./showlist";
 import './todo.css';
 import cross from './cross.png';
 import tick from './tick.png';
 import menu from './menu.png';
 
+
+// const animateButton = {
+//     scale1: { transform: 'scale(1.2)' },
+//     scale0: { transform: 'scale(1)' }
+// }
+
 export default class todo extends Component {
 
-    constructor() {
-        super()
-
+    constructor(props) {
+        super(props)
         this.state = {
             todo: '',
             allTodos: [],
@@ -26,12 +32,16 @@ export default class todo extends Component {
         e.preventDefault()
         if (this.state.todo.length !== 0) {
             let todoArray = this.state.allTodos;
-            todoArray.push(this.state.todo)
+            todoArray.unshift(this.state.todo)
             this.setState({
                 allTodos: todoArray,
-                todo: ''
+                todo: '',
             })
         }
+    }
+
+    animateSubmitButton = () => {
+        this.setState({ animateSubmit: false })
     }
 
     mouseDown = (e) => {
@@ -41,45 +51,35 @@ export default class todo extends Component {
         })
     }
 
-    // mouseMove = (e) => {
-    //     // var moveX = e.clientX;
-    //     // console.log('mouseMove', moveX)
-    // }
-
     mouseUp = (event, index) => {
-        // console.log("e=", event)
-        // console.log("index=", index)
-        // console.log("value=", v)
 
-        var clientX = event.clientX;
         // console.log("clientX=", clientX)
+        var clientX = event.clientX;
         this.calcDifference(clientX, index)
     }
 
     calcDifference = (clientX, index) => {
         let startClientX = this.state.startClientX
         let differ = clientX - startClientX
-        differ > 60 ? this.deleteTodo(index) : console.log('shorter swipe')
+        this.deleteTodo(differ, index)
     }
 
-    deleteTodo = (index) => {
-        // e.preventDefault()
-        console.log("Id", index)
+    deleteTodo = (differ, index) => {
+        // console.log("Id", index)
+        differ > 60 ? this.deleteTodo(index) : console.log('shorter swipe')
         let newArray = this.state.allTodos
         newArray.splice(index, 1)
-
         this.setState({
             allTodos: newArray,
-            // listId: ""
         })
     }
 
-    mouseLeave = () => {
-        console.log("mouse Leave")
-        // this.setState({
-        //     listId: ""
-        // })
-    }
+    // mouseLeave = () => {
+    //     console.log("mouse Leave")
+    //     // this.setState({
+    //     //     listId: ""
+    //     // })
+    // }
 
 
     render() {
@@ -101,7 +101,6 @@ export default class todo extends Component {
                                                     onMouseDown={this.mouseDown}
                                                     onMouseUp={(event) => this.mouseUp(event, i, v)}
                                                     onMouseLeave={this.mouseLeave}
-                                                // onMouseMove={this.mouseMove}
                                                 >
                                                     {v}
                                                 </li>
@@ -122,8 +121,8 @@ export default class todo extends Component {
                             </input>
                             <button
                                 type="submit"
-                                className="button"
                                 onClick={this.addTodo}
+                                className="button"
                             >
                             </button>
                         </form>
