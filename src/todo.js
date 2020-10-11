@@ -18,7 +18,7 @@ export default class todo extends Component {
         this.state = {
             todo: '',
             allTodos: [],
-            startClientX: '',
+            startClientX: ''
         }
     }
 
@@ -52,8 +52,6 @@ export default class todo extends Component {
     }
 
     mouseUp = (event, index) => {
-
-        // console.log("clientX=", clientX)
         var clientX = event.clientX;
         this.calcDifference(clientX, index)
     }
@@ -65,13 +63,16 @@ export default class todo extends Component {
     }
 
     deleteTodo = (differ, index) => {
+        // console.log("differ", differ)
         // console.log("Id", index)
-        differ > 60 ? this.deleteTodo(index) : console.log('shorter swipe')
-        let newArray = this.state.allTodos
-        newArray.splice(index, 1)
-        this.setState({
-            allTodos: newArray,
-        })
+        if (differ > 60) {
+            let newArray = this.state.allTodos
+            newArray.splice(index, 1)
+            this.setState({
+                allTodos: newArray,
+            })
+        }
+        else console.log('shorter swipe')
     }
 
     // mouseLeave = () => {
