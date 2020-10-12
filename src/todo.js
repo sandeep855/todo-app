@@ -17,8 +17,10 @@ export default class todo extends Component {
         super(props)
         this.state = {
             todo: '',
+            startClientX: '',
             allTodos: [],
-            startClientX: ''
+            finishTodos: [],
+            showGreen: false
         }
     }
 
@@ -36,12 +38,9 @@ export default class todo extends Component {
             this.setState({
                 allTodos: todoArray,
                 todo: '',
+                showGreen: false
             })
         }
-    }
-
-    animateSubmitButton = () => {
-        this.setState({ animateSubmit: false })
     }
 
     mouseDown = (e) => {
@@ -51,36 +50,43 @@ export default class todo extends Component {
         })
     }
 
-    mouseUp = (event, index) => {
+    mouseUp = (event, value, index) => {
         var clientX = event.clientX;
-        this.calcDifference(clientX, index)
+        this.calcDifference(clientX, value, index)
     }
 
-    calcDifference = (clientX, index) => {
+    calcDifference = (clientX, value, index) => {
         let startClientX = this.state.startClientX
         let differ = clientX - startClientX
-        this.deleteTodo(differ, index)
+        this.moveToFinish(differ, value, index)
     }
 
-    deleteTodo = (differ, index) => {
-        // console.log("differ", differ)
-        // console.log("Id", index)
-        if (differ > 60) {
-            let newArray = this.state.allTodos
-            newArray.splice(index, 1)
+    moveToFinish = (differ, value, index) => {
+
+        let finishTodosCopy = this.state.finishTodos
+        let allTodosCopy = this.state.allTodos
+
+        if (differ > 60 && this.state.showGreen === false) {
+            finishTodosCopy.unshift(value)
+            allTodosCopy.splice(index, 1)
             this.setState({
-                allTodos: newArray,
+                finishTodos: finishTodosCopy,
+                allTodos: allTodosCopy
             })
+        } else if (differ > 60 && this.state.showGreen === true) {
+            let finishTodosCopy = this.state.finishTodos
+            finishTodosCopy.splice(index, 1)
+            this.setState({ finishTodos: finishTodosCopy })
         }
-        else console.log('shorter swipe')
     }
 
-    // mouseLeave = () => {
-    //     console.log("mouse Leave")
-    //     // this.setState({
-    //     //     listId: ""
-    //     // })
-    // }
+    finishTodos = () => {
+        this.setState({ showGreen: true })
+    }
+
+    tickRed = () => {
+        this.setState({ showGreen: false })
+    }
 
 
     render() {
@@ -92,28 +98,48 @@ export default class todo extends Component {
                         <div className="headingTodo">
                             Todos
                         </div>
+
                         <div className="todoContainer">
                             {
-                                this.state.allTodos.map((v, i) => {
-                                    return (
-                                        <div key={i}>
-                                            <ul className="setUl grabbable">
-                                                <li
-                                                    onMouseDown={this.mouseDown}
-                                                    onMouseUp={(event) => this.mouseUp(event, i, v)}
-                                                    onMouseLeave={this.mouseLeave}
-                                                >
-                                                    {v}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )
-                                })
+                                this.state.showGreen
+                                    ?
+                                    this.state.finishTodos.map((value, i) => {
+                                        return (
+                                            <div key={i}>
+                                                <ul className="setUl grabbable" style={{ color: 'green' }}>
+                                                    <li
+                                                        onMouseDown={this.mouseDown}
+                                                        onMouseUp={(event) => this.mouseUp(event, value, i)}
+                                                        onMouseLeave={this.mouseLeave}
+                                                    >
+                                                        {value}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        )
+                                    })
+                                    :
+                                    this.state.allTodos.map((value, i) => {
+                                        return (
+                                            <div key={i}>
+                                                <ul className="setUl grabbable">
+                                                    <li
+                                                        onMouseDown={this.mouseDown}
+                                                        onMouseUp={(event) => this.mouseUp(event, value, i)}
+                                                        onMouseLeave={this.mouseLeave}
+                                                    >
+                                                        {value}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        )
+                                    })
                             }
+
                         </div>
                         <form className="inputContainer">
                             <input type="text"
-                                maxLength="20"
+                                maxLength="25"
                                 className="input"
                                 id="todo"
                                 value={this.state.todo}
@@ -138,14 +164,14 @@ export default class todo extends Component {
                             <div className="crossIcon">
                                 <img src={cross} alt=""
                                     className="cross"
-
+                                    onClick={this.tickRed}
                                 >
                                 </img>
                             </div>
                             <div className="tickIcon">
                                 <img src={tick} alt=""
                                     className="tick"
-
+                                    onClick={this.finishTodos}
                                 >
                                 </img>
                             </div>
